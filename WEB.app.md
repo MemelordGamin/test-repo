@@ -1,6 +1,3 @@
-Yes. The activity type is now **locked after creation**. The Course Creator can edit its content and settings, but cannot change it into another activity type.
-
-From Steps 1–169, CTRL+PASS has a strong foundation and a working Course Creator design module. The complete multi-role learning system is not finished yet.
 
 # Current project status
 
