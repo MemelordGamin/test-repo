@@ -1,356 +1,85 @@
-
-# Current project status
+# CTRL+PASS — Current Project Status
 
 ## 1. Project foundation — completed
 
-* ASP.NET Core MVC project using .NET 10.
-* Microsoft SQL Server LocalDB connected.
-* Entity Framework Core configured.
-* Database migrations working.
-* Bootstrap and Razor views working.
-* Role-based authorization established.
-* Registration, login and logout working.
-* Inactive users are blocked from logging in.
-* Application uses a custom `ApplicationUser`.
-* `FullName`, account status, school assignment and creation date are stored.
-* Database seeding is available.
+- ASP.NET Core MVC project using .NET 10.
+- Microsoft SQL Server LocalDB connected.
+- Entity Framework Core configured.
+- Database migrations working.
+- Bootstrap and Razor views working.
+- Role-based authorization established.
+- Registration, login and logout working.
+- Inactive users are blocked from logging in.
+- Application uses a custom `ApplicationUser`.
+- `FullName`, account status, school assignment and creation date are stored.
+- Database seeding is available.
 
 ## 2. Roles — completed
 
 These roles exist:
 
-* Student
-* Instructor
-* Course Creator
-* Academic Leader
-* Admin
+- Student
+- Instructor
+- Course Creator
+- Academic Leader
+- Admin
 
 Role-based navigation and dashboard redirection work.
-
-The dashboards currently exist, but several are still basic placeholders until their main features are created.
 
 ## 3. Schools — completed
 
 The four schools are stored in SQL Server:
 
-* School of Computing
-* School of Technology
-* School of Business
-* School of Engineering
+- School of Computing
+- School of Technology
+- School of Business
+- School of Engineering
 
-Course Creators and Academic Leaders can be assigned to one school.
+The following roles can be assigned to one school:
+
+- Instructor
+- Course Creator
+- Academic Leader
 
 Course codes use separate school sequences:
 
-* `COM-0001`
-* `TEC-0001`
-* `BUS-0001`
-* `ENG-0001`
+- `COM-0001`
+- `TEC-0001`
+- `BUS-0001`
+- `ENG-0001`
 
 ## 4. Admin user management — completed
 
 The Admin can:
 
-* View users.
-* Create users.
-* Edit users.
-* Assign roles.
-* Assign Course Creators and Academic Leaders to schools.
-* Activate and deactivate accounts.
-* Prevent accidental self-deactivation.
-* See each user’s role, school and account status.
+- View users.
+- Create users.
+- Edit users.
+- Assign roles.
+- Assign Instructors, Course Creators and Academic Leaders to schools.
+- Activate and deactivate accounts.
+- Prevent accidental self-deactivation.
+- See each user’s role, school and account status.
 
-## 5. Course model and workflow structure — completed
+## 5. Course model and workflow — completed
 
-The `Course` database structure includes:
+The `Course` structure includes course code, title, description, thumbnail path, school, Course Creator, access level, status, maintenance status, creation and update dates, and submission, approval and publication dates.
 
-* Course code
-* Title
-* Description
-* Thumbnail path
-* School
-* Course Creator
-* Access level
-* Status
-* Maintenance status
-* Creation and update dates
-* Submission, approval and publication dates
+Course statuses:
 
-The course statuses are locked as:
+- Draft
+- Under Review
+- Changes Requested
+- Approved
+- Published
 
-* Draft
-* Under Review
-* Changes Requested
-* Approved
-* Published
+Course access levels:
 
-The access levels are:
+- Free
+- Premium
+- Enterprise
 
-* Free
-* Premium
-* Enterprise
-
-The full review workflow is designed but not implemented yet.
-
-## 6. Course Creator dashboard — completed
-
-The Course Creator dashboard displays:
-
-* Total courses
-* Draft courses
-* Courses under review
-* Published courses
-* Course code
-* Course title
-* Access level
-* Status
-* Last updated time
-* Course actions
-
-The Course Creator can create a course and save it as a Draft.
-
-## 7. Course creation and editing — completed
-
-The Course Creator can:
-
-* Create a new course.
-* Receive an automatically generated course code.
-* Set the title.
-* Set the description.
-* Set the access level.
-* Edit a Draft course.
-* Edit a course after changes have been requested.
-* View validation messages.
-* Update the course’s last-modified time.
-
-## 8. Course sections — completed
-
-The `CourseSection` table has been created.
-
-The Course Creator can:
-
-* Add sections.
-* Automatically assign section order.
-* View sections in order.
-* Edit section title and description.
-* Move sections up.
-* Move sections down.
-* Prevent editing while the course is locked.
-* See section order on the design page.
-
-Each course can contain multiple sections.
-
-## 9. Course activity types — completed
-
-The following 10 activity types are locked:
-
-1. Text Content
-2. Image
-3. Video
-4. Document/File
-5. External Link
-6. Short Answer Question
-7. Paragraph Question
-8. Multiple Choice Question
-9. Checkbox Question
-10. Dropdown Question
-
-## 10. Course activity database — completed
-
-The `CourseActivity` table stores:
-
-* Section
-* Activity type
-* Title
-* Instructions
-* Text content
-* File path
-* External URL
-* Model answer
-* Display order
-* Required or optional status
-* Creation and update dates
-
-Each activity belongs to one section.
-
-## 11. Activity file-upload rules — completed
-
-The validation rules are implemented.
-
-### Images
-
-Allowed:
-
-* `.jpg`
-* `.jpeg`
-* `.png`
-* `.webp`
-
-Maximum size:
-
-* 5 MB
-
-### Videos
-
-Allowed:
-
-* `.mp4`
-* `.webm`
-
-Maximum size:
-
-* 100 MB
-
-A video can use either:
-
-* An uploaded file, or
-* An external URL
-
-It cannot use both simultaneously.
-
-### Documents
-
-Allowed:
-
-* `.pdf`
-* `.doc`
-* `.docx`
-* `.ppt`
-* `.pptx`
-* `.xls`
-* `.xlsx`
-* `.txt`
-
-Maximum size:
-
-* 20 MB
-
-Files are stored under:
-
-```text
-wwwroot/uploads/course-activities/
-```
-
-Generated unique filenames are used.
-
-## 12. Creating activities — completed
-
-The Course Creator can:
-
-* Select an activity type.
-* Enter a title.
-* Enter instructions.
-* Add text content.
-* Upload a file.
-* Add an external URL.
-* Enter a model answer.
-* Mark an activity as required or optional.
-* Save activities into SQL Server.
-* Automatically assign activity order.
-
-Input requirements change according to the selected activity type.
-
-## 13. Displaying activities — completed
-
-The Design Course page displays:
-
-* Activity number
-* Activity title
-* Activity type
-* Required or optional status
-* Instructions
-* Text content
-* Images
-* Uploaded videos
-* Video links
-* Documents
-* External links
-* Model answers
-* Question options
-
-Activities are grouped under their correct sections.
-
-## 14. Question options — completed
-
-The `CourseActivityOption` table has been created.
-
-The Course Creator can:
-
-* Create Multiple Choice questions.
-* Create Checkbox questions.
-* Create Dropdown questions.
-* Open the Manage Question Options page.
-* Add answer options.
-* Mark options as correct.
-* View existing options.
-* See options on the Course Design page.
-
-For Multiple Choice and Dropdown questions:
-
-* Only one option can remain correct.
-
-For Checkbox questions:
-
-* Multiple options can be correct.
-
-At least two options will be required before review submission, although submission validation has not been built yet.
-
-# Confirmed but not implemented yet
-
-These decisions are already locked but still need code.
-
-## Course Creator
-
-* Edit activities.
-* Keep activity type locked after creation.
-* Replace uploaded files.
-* Delete activities.
-* Move activities up and down.
-* Delete question options.
-* Edit question options.
-* Reorder question options.
-* Validate that option-based questions have at least two options.
-* Ensure Multiple Choice and Dropdown questions have exactly one correct answer.
-* Ensure Checkbox questions have at least one correct answer.
-* Course thumbnail upload.
-* Full learner-style course preview.
-* Submit course for review.
-* View Academic Leader comments.
-* Re-edit a Changes Requested course.
-* Publish an Approved course.
-* Enter and leave maintenance mode for published courses.
-* Course Creator notifications.
-* Course Creator profile pages.
-
-# Major modules still required
-
-## 1. Academic Leader module
-
-The Academic Leader still needs:
-
-* School-specific dashboard.
-* View only courses from their assigned school.
-* Filter courses by status.
-* Open a submitted course.
-* Review it like a learner without saving progress.
-* View all sections and activities.
-* Write review comments.
-* Request changes.
-* Approve courses.
-* Record approval date.
-* Temporarily place a published course under maintenance.
-* Remove maintenance status.
-* Receive reported issues.
-* Send issue details to the Course Creator.
-* Generate reports.
-* Notifications.
-* Profile page.
-
-A `CourseReview` table still needs to be created.
-
-## 2. Course submission and publication workflow
-
-The main workflow still needs implementation:
+Implemented workflow:
 
 ```text
 Course Creator creates Draft
@@ -363,325 +92,307 @@ Academic Leader reviews
         ↓
 Changes Requested or Approved
         ↓
-Course Creator edits if required
+Course Creator edits and resubmits if required
         ↓
-Course Creator publishes Approved course
+Course Creator publishes an Approved course
         ↓
 Status becomes Published
 ```
 
-Necessary validation includes:
+## 6. Course Creator dashboard — completed
 
-* Course must have at least one section.
-* Each section must have at least one activity.
-* Question activities must have enough options.
-* Correct answers must be configured.
-* Required fields and files must exist.
+The dashboard displays total courses, Draft courses, courses Under Review, Published courses, course code, title, access level, status, last updated time and actions.
 
-## 3. Instructor module
+Actions change according to status:
 
-The Instructor still needs:
+- Draft → Edit and Design
+- Changes Requested → Edit and Design
+- Under Review → View Design
+- Approved → View Design and Publish Course
+- Published → View Design
 
-* Instructor dashboard.
-* Browse published courses.
-* Select a published course.
-* Create a Class.
-* Create Subclasses.
-* Enrol students.
-* Remove students.
-* View enrolled students.
-* Search and filter students.
-* View student progress using progress bars.
-* View progress by class.
-* View progress by course.
-* Add notes or comments for students.
-* Generate progress reports.
-* Export reports as CSV.
-* Report course issues.
-* Instructor profile.
-* Instructor notifications.
+## 7. Course creation and editing — completed
 
-Likely database structures still required:
+The Course Creator can create a course, receive an automatic school-based course code, set title, description and access level, edit Draft and Changes Requested courses, view validation messages and update the modified date.
 
-* `Class`
-* `Subclass`
-* `ClassEnrollment`
-* `InstructorNote`
+## 8. Course sections — completed
 
-## 4. Student module
+The Course Creator can add, edit, move and delete sections. Section order is generated automatically and repaired after deletion. Deleting a section also removes its activities, options and uploaded files.
 
-The Student still needs:
+## 9. Course activities — completed
 
-* Student dashboard.
-* Browse available published courses.
-* Access courses according to membership plan.
-* Join or be enrolled into classes.
-* Open course sections and activities.
-* Complete required activities.
-* Submit short and paragraph answers.
-* Answer Multiple Choice questions.
-* Answer Checkbox questions.
-* Answer Dropdown questions.
-* Receive quiz results.
-* Save activity completion.
-* Calculate course progress.
-* View enrolled courses.
-* View courses in progress.
-* View completed courses.
-* View learning history.
-* Report course issues.
-* Receive notifications.
-* Profile details tab.
-* Membership plan tab.
-* Progress/history tab.
+The following 10 activity types are implemented:
 
-Likely database structures still required:
+1. Text Content
+2. Image
+3. Video
+4. Document/File
+5. External Link
+6. Short Answer Question
+7. Paragraph Question
+8. Multiple Choice Question
+9. Checkbox Question
+10. Dropdown Question
 
-* `StudentProgress`
-* `ActivityCompletion`
-* `ActivitySubmission`
-* `StudentAnswer`
-* `CourseEnrollment`
+The Course Creator can create, edit, move and delete activities. The activity type remains locked after creation. Uploaded files can be replaced and old files are cleaned up.
 
-## 5. Guest module
+## 10. File uploads — completed
 
-Guests still need:
+Images: `.jpg`, `.jpeg`, `.png`, `.webp`, maximum 5 MB.
 
-* Guest dashboard or public home page.
-* Browse public Free courses.
-* Open course content.
-* Complete activities temporarily.
-* No saved progress.
-* No issue-reporting button.
-* No profile.
-* Sign-up button.
-* Membership promotion.
+Videos: `.mp4`, `.webm`, maximum 100 MB. A video uses either an upload or an external URL, not both.
 
-Guest access must remain separate from Student progress records.
+Documents: `.pdf`, `.doc`, `.docx`, `.ppt`, `.pptx`, `.xls`, `.xlsx`, `.txt`, maximum 20 MB.
 
-## 6. Membership plans
+Files are stored under:
 
-The plans are agreed:
+```text
+wwwroot/uploads/course-activities/
+```
 
-| Plan       |      Price | Access                   |
-| ---------- | ---------: | ------------------------ |
-| Free       |        RM0 | Free courses             |
-| Premium    | RM240/year | Free and Premium courses |
-| Enterprise | RM300/year | All courses              |
+Unique generated filenames are used.
 
-Still required:
+## 11. Question options — completed
 
-* Membership plan database structure.
-* Student plan selection.
-* Current membership display.
-* Access checks.
-* Upgrade interface.
-* Expiry and renewal handling.
-* Enterprise access rules.
+The Course Creator can add, edit, delete and reorder options.
 
-A real payment gateway is not essential unless required by the lecturer. A simulated membership selection can demonstrate the feature.
+Rules implemented:
 
-## 7. Progress tracking
+- Multiple Choice and Dropdown questions allow only one correct answer.
+- Checkbox questions can contain multiple correct answers.
+- Deleted options are reordered automatically.
+- Deleting a correct answer produces a warning.
 
-Progress still needs to be implemented.
+## 12. Submission validation — completed
 
-Required functions include:
+Before submission, the system checks:
 
-* Mark activities complete.
-* Save activity completion date.
-* Track required activities.
-* Calculate percentage completed.
-* Display progress bars.
-* Mark courses as:
+- The course has at least one section.
+- Each section has at least one activity.
+- Required text, files and URLs exist.
+- Video activities use exactly one source.
+- Option-based questions contain at least two options.
+- Multiple Choice and Dropdown questions have exactly one correct answer.
+- Checkbox questions have at least one correct answer.
 
-  * Not Started
-  * In Progress
-  * Completed
-* Store quiz attempts.
-* Store submitted answers.
-* Allow instructors to view progress.
+## 13. Academic Leader review — completed
 
-## 8. Issue-reporting system
+The `CourseReview` table stores course, Academic Leader, decision, comments and review date.
 
-Students and Instructors should be able to report issues.
+The Academic Leader can:
 
-Still required:
+- View only non-Draft courses from their assigned school.
+- Review all sections, activities and options.
+- View correct answers and model answers.
+- Request changes with required comments.
+- Approve a corrected course.
+- Preserve full review history.
 
-* Issue-report form.
-* Issue title.
-* Description.
-* Course and activity reference.
-* Reporter.
-* Date reported.
-* Issue status.
-* Academic Leader review.
-* Forwarding the problem to the Course Creator.
-* Course Creator response.
-* Resolution status.
-* Notifications.
+The Course Creator can see Academic Leader feedback, edit a Changes Requested course and resubmit it.
 
-Guests cannot report issues.
+## 14. Course publication — completed
 
-## 9. Notification system
+The Course Creator can publish an Approved course. Publication records the date, changes the status to Published and makes the course available for Instructor class creation.
 
-Notifications still need to be built for events such as:
+## 15. Instructor dashboard — completed
 
-* Student enrolled.
-* Student removed.
-* Course submitted.
-* Course under review.
-* Changes requested.
-* Course approved.
-* Course published.
-* Course under maintenance.
-* Issue reported.
-* Issue forwarded.
-* Issue resolved.
+The Instructor dashboard displays:
 
-Still required:
+- Assigned school
+- Total classes
+- Active classes
+- Inactive classes
+- Available Published courses from the assigned school
+- Instructor-owned classes
 
-* Notification table.
-* Notification list.
-* Read/unread state.
-* Notification links.
-* Notification badge.
+Only Published courses from the Instructor’s assigned school are available. Courses under maintenance are excluded.
 
-## 10. Profiles
+## 16. Instructor class creation — completed
 
-Profiles still need to be completed.
+The `CourseClass` table has been created.
 
-### Student
+A class stores:
 
-* Profile details
-* Membership
-* Course history
-* Progress
-* Enrolled courses
+- Automatically generated class code
+- Class name
+- Optional description
+- Selected Published course
+- Instructor
+- Start date
+- End date
+- Active status
+- Creation and update dates
 
-### Instructor
+Class code format:
 
-* Profile details
-* Membership
-* Classes
-* Student completion statistics
-* Reports
+```text
+CLS-0001
+```
 
-### Course Creator
+The Instructor can create a class only from a Published course belonging to their assigned school. The end date must be after the start date.
 
-Recommended tabs:
+Current test class:
 
-* Profile details
-* My courses
-* Drafts
-* Courses under review
-* Approved and published courses
-* Review history
+```text
+CLS-0001 — Cybersecurity September Intake
+```
 
-### Academic Leader
+## 17. Locked subclass decision
 
-* Profile details
-* Assigned school
-* Reviews completed
-* Courses approved
-* Issues handled
+Each subclass will receive an automatically generated code:
 
-## 11. Admin website management
+```text
+SUB-0001
+```
 
-Admin user management is complete, but general website management remains.
+A subclass will belong to one Instructor class.
+
+# Confirmed but not implemented yet
+
+## Course Creator
+
+- Course thumbnail upload.
+- Full learner-style course preview.
+- Enter and leave maintenance mode.
+- Notifications.
+- Profile pages.
+
+## Academic Leader
+
+- Filter courses by status.
+- Place Published courses under maintenance and remove maintenance status.
+- Receive and manage reported issues.
+- Forward issue details to the Course Creator.
+- Reports.
+- Notifications.
+- Profile page.
+
+## Instructor
+
+- Manage a class.
+- Edit class details.
+- Activate or deactivate a class.
+- Create, edit and delete subclasses.
+- Enrol and remove students.
+- View, search and filter enrolled students.
+- View student progress.
+- Add notes for students.
+- Generate and export reports.
+- Report course issues.
+- Profile and notifications.
+
+Likely remaining Instructor structures:
+
+- `CourseSubclass`
+- `ClassEnrollment`
+- `InstructorNote`
+
+## Student
 
 Still required:
 
-* Edit About Us content.
-* Edit Contact information.
-* Edit Policies.
-* Manage general website information.
-* View all courses.
-* View reported issues.
-* Basic system statistics.
+- Student dashboard.
+- Published-course access based on membership.
+- Class and subclass enrolment.
+- Course activity completion.
+- Short, paragraph, Multiple Choice, Checkbox and Dropdown submissions.
+- Quiz results.
+- Saved progress and completion status.
+- Course history.
+- Issue reporting.
+- Notifications.
+- Profile and membership tabs.
 
-## 12. Public pages
+Likely Student structures:
+
+- `StudentProgress`
+- `ActivityCompletion`
+- `ActivitySubmission`
+- `StudentAnswer`
+- `CourseEnrollment`
+
+## Guest
 
 Still required:
 
-* Home page
-* About Us
-* Contact Us
-* Policies
-* Course catalogue
-* Course details
-* Membership plans page
+- Public home page or Guest dashboard.
+- Browse Free courses.
+- Temporary course access with no saved progress.
+- No issue reporting.
+- No profile.
+- Sign-up and membership promotion.
 
-## 13. Reports
+## Membership plans
 
-Still required:
+| Plan | Price | Access |
+|---|---:|---|
+| Free | RM0 | Free courses |
+| Premium | RM240/year | Free and Premium courses |
+| Enterprise | RM300/year | All courses |
 
-* Student progress report.
-* Class progress report.
-* Course completion report.
-* Academic Leader review report.
-* Issue report.
-* Instructor report dashboard.
-* HTML report display.
-* CSV export.
+Still required: membership records, plan selection, access checks, upgrade interface, expiry and renewal handling.
 
-## 14. Security and final validation
+## Progress tracking
 
-Before completion, the system will need:
+Still required: activity completion, completion dates, percentage calculation, progress bars, Not Started/In Progress/Completed states, quiz attempts and Instructor progress views.
 
-* Authorization testing for every role.
-* Protection against changing IDs in URLs.
-* File-name and file-extension validation.
-* File cleanup when an activity is deleted.
-* File replacement cleanup.
-* Safe external links.
-* Validation of all workflow transitions.
-* Error pages.
-* Confirmation screens before deletion.
-* Input validation.
-* Testing of inactive accounts.
-* Testing of unauthorised role access.
+## Issue reporting
 
-## 15. Final UI work
+Still required: issue form, course/activity reference, reporter, status, Academic Leader review, forwarding to Course Creator, response, resolution and notifications. Guests cannot report issues.
 
-The interface still needs:
+## Notifications
 
-* Final navigation menu.
-* Role-specific menu items.
-* Consistent buttons and status colours.
-* Responsive mobile layout.
-* Empty-state messages.
-* Confirmation modals.
-* Pagination for large lists.
-* Search and filtering.
-* Better dashboard statistics.
-* Final branding using `CTRL+PASS` rather than `CtrlPass.Web`.
-* Footer and public page links.
+Still required: notification table, list, read/unread state, links and badge for enrolment, review, publication, maintenance and issue events.
+
+## Profiles
+
+Student, Instructor, Course Creator and Academic Leader profile pages and role-specific tabs remain to be implemented.
+
+## Admin website management
+
+Still required: About Us, Contact, Policies, general website information, all-course view, issue view and system statistics.
+
+## Public pages
+
+Still required: Home, About Us, Contact Us, Policies, course catalogue, course details and membership plans.
+
+## Reports
+
+Still required: student progress, class progress, course completion, Academic Leader review, issue reports, HTML reports and CSV export.
+
+## Security and final validation
+
+Still required: full role testing, ID-tampering tests, file validation review, workflow transition tests, error pages, deletion confirmations, inactive-account tests and unauthorised-access tests.
+
+## Final UI work
+
+Still required: final navigation, role-specific menu items, consistent styling, responsive layout, pagination, search/filtering, final `CTRL+PASS` branding, footer and public links.
 
 # Overall position
 
-The parts already built cover:
+Completed work now covers:
 
-* Core project setup
-* SQL Server database
-* Identity and roles
-* Admin user management
-* Schools
-* Course creation
-* Course sections
-* Course design
-* Ten learning activity types
-* File uploads
-* Question options
+1. Core project setup
+2. SQL Server and EF Core
+3. Identity and roles
+4. Admin user management
+5. School assignment
+6. Course creation and editing
+7. Sections and ten activity types
+8. File uploads and question options
+9. Submission validation
+10. Academic Leader review and approval
+11. Review history and resubmission
+12. Course publication
+13. Instructor dashboard
+14. Instructor class creation
 
-The largest remaining parts are:
+Next stage:
 
-1. Course review, approval and publication
-2. Academic Leader features
-3. Instructor class management
-4. Student learning and progress tracking
-5. Guest course access
-6. Notifications
-7. Issue reporting
-8. Membership access
-9. Profiles
-10. Reports and final testing
+```text
+Instructor manages CLS-0001
+        ↓
+Instructor creates SUB-0001
+        ↓
+Instructor enrols Students into the subclass
+```
